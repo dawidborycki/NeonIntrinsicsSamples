@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     Native methods from the native-lib.cpp
+     * Native methods from the native-lib.cpp
      */
     public native byte[] generateSignal();
     public native byte[] truncate(boolean useNeon);
@@ -75,14 +75,14 @@ public class MainActivity extends AppCompatActivity {
         int count = array.length;
         DataPoint[] dataPoints = new DataPoint[count];
 
-        for(int i = 0; i < count; i++) {
+        for (int i = 0; i < count; i++) {
             dataPoints[i] = new DataPoint(i, array[i]);
         }
 
         return dataPoints;
     }
 
-    private void configureGraph(){
+    private void configureGraph() {
         // Initialize graph
         graph = (GraphView) findViewById(R.id.graph);
 
@@ -125,6 +125,6 @@ public class MainActivity extends AppCompatActivity {
     private void displayProcessingTime() {
         String strProcessingTime = String.format("%s = %.2f us", "Processing time", getProcessingTime());
 
-        textViewProcessingTime.setText(strProcessingTime );
+        textViewProcessingTime.setText(strProcessingTime);
     }
 }

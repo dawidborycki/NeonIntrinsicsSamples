@@ -8,6 +8,8 @@
 
 using namespace std;
 
+// You can set this macro to 0 to test the code in the emulator
+// or on the x86 platform
 #define HAVE_NEON 1
 
 #if HAVE_NEON
@@ -44,7 +46,7 @@ void generateSignal() {
 
 void truncate() {
     for (int i = 0; i < SIGNAL_LENGTH; i++) {
-        inputSignalTruncate[i] = std::max(inputSignal[i], (int8_t)THRESHOLD);
+        inputSignalTruncate[i] = std::min(inputSignal[i], (int8_t)THRESHOLD);
     }
 }
 
@@ -87,7 +89,7 @@ void truncateNeon() {
         int8x16_t inputNeon = vld1q_s8(inputSignal + i);
 
         // Truncate
-        uint8x16_t partialResult = vmaxq_s8(inputNeon, threshValueNeon);
+        uint8x16_t partialResult = vminq_s8(inputNeon, threshValueNeon);
 
         // Store result in the output buffer
         vst1q_s8(inputSignalTruncate + i, partialResult);
@@ -125,7 +127,7 @@ void convolutionNeon() {
         inputSignalConvolution[i] = (uint8_t) (convSum / kernelSum);
     }
 
-    //delete mulResult;
+    delete mulResult;
 }
 
 #endif
